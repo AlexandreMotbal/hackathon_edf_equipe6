@@ -6,8 +6,6 @@ function generateGrid(){
     jsonBoard = localStorage.getItem("board");
     board = JSON.parse(jsonBoard)
     voiture = JSON.parse(jsonVoiture)
-
-    alert(board)
     for(var n = 0; n < board.length; n++){
         targetData.innerHTML +="<div class='cases'>";
         for(var m = 0; m < board[0].length; m++){
@@ -48,22 +46,42 @@ function move(i){
 
     board = JSON.parse(jsonBoard);
     voiture = JSON.parse(jsonVoiture)
-    if (voiture[0] + i >10){
-        if(voiture[1]+1<=5){
-            voiture[1] = voiture[1] + 1
-            voiture[0] = voiture[0]+i%10
-            jsonValue = JSON.stringify([voiture[0]%10,voiture[1]])
-            localStorage.setItem("voiture",jsonValue)
-        }
-        else{
-            alert("win !!");
-        }
-    }else{
-        voiture[0] = voiture[0] + i
-        localStorage.setItem("voiture", JSON.stringify([voiture[0],voiture[1]]))
-    }
-    generateGrid(board)
 
+    if(voiture[2]<2){
+        console.log("NotEnoughBattery");
+        //reloading function
+    }
+    else{
+        voiture[2] = voiture[2] - 2
+
+        if (voiture[0] + i >10){
+            if(voiture[1]+1<=5){
+                voiture[1] = voiture[1] + 1
+                voiture[0] = voiture[0]+i%10
+                jsonValue = JSON.stringify([voiture[0]%10,voiture[1]])
+                localStorage.setItem("voiture",jsonValue)
+            }
+            else{
+                alert("win !!");
+            }
+        }else{
+            voiture[0] = voiture[0] + i
+            localStorage.setItem("voiture", JSON.stringify([voiture[0],voiture[1]]))
+        }
+        if(voiture[0]>10 && voiture[1]>=4){
+            alert("win");
+        }
+        generateGrid(board)
+    }
+}
+
+function startingCost(board,voiture){
+    result = 2;
+    if(board[voiture[0]][voiture[1]] == 7){
+        result = 4
+    }else if(board[voiture[0]][voiture[1]] == 8){
+        result = 1
+    }
 }
 
 
@@ -76,8 +94,19 @@ function startGame(){
         [2,0,0,0,0,0,0,0,0,0,3],
         [5,0,0,0,0,0,0,0,0,0,4]
     ]
-    var voiture = [0,0];
+    //0 : route
+    //1 : voiture
+    //2 : haut gauche
+    //3 : bas droit
+    //4 : haut droit
+    //5 : bas gauche
 
+    //7 Montée
+    //8 descentes
+
+
+    //[x,y,energy]
+    var voiture = [0,0,6]
     var jsonBoard = JSON.stringify(board);
     var jsonVoiture = JSON.stringify(voiture);
     localStorage.setItem("voiture", jsonVoiture);

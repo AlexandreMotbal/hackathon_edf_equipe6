@@ -5,20 +5,56 @@
     <title>Game</title>
     
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="./styles.css">
 
 </head>
 <body>
-    <iframe src="hackhathon-main\hackhathon-main\index.html" title="description"></iframe> 
+    <div id="div-die" class="dice">
+        <ol class="die-list odd-roll" data-roll="1" id="die">
+          <li class="die-item" data-side="1">
+            <span class="dot"></span>
+          </li>
+          <li class="die-item" data-side="2">
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </li>
+          <li class="die-item" data-side="3">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </li>
+          <li class="die-item" data-side="4">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </li>
+          <li class="die-item" data-side="5">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </li>
+          <li class="die-item" data-side="6">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </li>
+        </ol>
+    </div>
     <div id="board">
         
 
     </div>
     <div>
         <button type="button" id="myBtn" onclick="startGame();">start</button>
-        <button type="button" id="myBtn" onclick="move(3);">Move</button>
     </div>
+    <script src="car.js"></script>
     <script src="library.js"></script>
-   
 </body>
 
 </html>

@@ -35,19 +35,18 @@ class Point {
 	// }
 }
 
-const p1 = new Point(5, 5);
-const car = new Car(7, p1, "Top");
+
 
 function keyPressed(event){
     switch (event.code) {
         case "ControlLeft" || "ControlRight":
-			car.loadBattery(4)
+			// car.loadBattery(4)
             break;
         case "Space":
-			if(car.battery >= 2)
-            	rollDice(car);
-			else
-				car.loadBattery(4)
+			// if(car.battery >= 2)
+            	rollDice();
+			// else
+			// 	car.loadBattery(4)
         break;
     
         default:
@@ -55,14 +54,20 @@ function keyPressed(event){
     }
 }
 
-function rollDice(car) {
-	const dice = [...document.querySelectorAll(".die-list")];
-	dice.forEach(die => {
-		toggleClasses(die);
-		die.dataset.roll = getRandomNumber(1, 6);
-		car.Moving(new Point(4,die.dataset.roll),"Left", 2)
-		console.log("Moving")
-	});
+function rollDice() {
+	if(localStorage.getItem("isStarted")==1){
+		const dice = [...document.querySelectorAll(".die-list")];
+		let deplacement=0
+		dice.forEach(die => {
+			toggleClasses(die);
+			deplacement=die.dataset.roll = getRandomNumber(1, 6)
+		});
+		setTimeout(()=>{
+			move(deplacement)
+		},1500)
+	}else{
+		startGame()
+	}
 }
 
 function toggleClasses(die) {
@@ -76,6 +81,8 @@ function getRandomNumber(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// document.getElementById("die").addEventListener("click", rollDice);
 
 document.body.addEventListener("keydown", keyPressed)
+if(localStorage.getItem("isStarted")==0){
+	document.getElementById("div-die").style.visibility="hidden"
+}

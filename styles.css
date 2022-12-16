@@ -257,4 +257,5 @@ button:hover {
 	position: fixed;
 	bottom: 50px;
 	right: 50px;
+	visibility: hidden;
 }

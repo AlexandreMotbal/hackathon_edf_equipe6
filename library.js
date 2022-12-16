@@ -1,3 +1,4 @@
+localStorage.setItem("isStarted", 0)
 var targetData = document.getElementById("board");
 
 function generateGrid(){
@@ -41,37 +42,39 @@ function generateGrid(){
 
 
 function move(i){
-    jsonVoiture = localStorage.getItem("voiture");
-    jsonBoard = localStorage.getItem("board");
+    if(localStorage.getItem("isStarted")==1){
+        jsonVoiture = localStorage.getItem("voiture");
+        jsonBoard = localStorage.getItem("board");
 
-    board = JSON.parse(jsonBoard);
-    voiture = JSON.parse(jsonVoiture)
+        board = JSON.parse(jsonBoard);
+        voiture = JSON.parse(jsonVoiture)
 
-    if(voiture[2]<2){
-        console.log("NotEnoughBattery");
-        //reloading function
-    }
-    else{
-        voiture[2] = voiture[2] - 2
-
-        if (voiture[0] + i >10){
-            if(voiture[1]+1<=5){
-                voiture[1] = voiture[1] + 1
-                voiture[0] = voiture[0]+i%10
-                jsonValue = JSON.stringify([voiture[0]%10,voiture[1]])
-                localStorage.setItem("voiture",jsonValue)
-            }
-            else{
-                alert("win !!");
-            }
-        }else{
-            voiture[0] = voiture[0] + i
-            localStorage.setItem("voiture", JSON.stringify([voiture[0],voiture[1]]))
+        if(voiture[2]<2){
+            console.log("NotEnoughBattery");
+            //reloading function
         }
-        if(voiture[0]>10 && voiture[1]>=4){
-            alert("win");
+        else{
+            voiture[2] = voiture[2] - 2
+
+            if (voiture[0] + i >10){
+                if(voiture[1]+1<=5){
+                    voiture[1] = voiture[1] + 1
+                    voiture[0] = voiture[0]+i%10
+                    jsonValue = JSON.stringify([voiture[0]%10,voiture[1]])
+                    localStorage.setItem("voiture",jsonValue)
+                }
+                else{
+                    alert("win !!");
+                }
+            }else{
+                voiture[0] = voiture[0] + i
+                localStorage.setItem("voiture", JSON.stringify([voiture[0],voiture[1]]))
+            }
+            if(voiture[0]>10 && voiture[1]>=4){
+                alert("win");
+            }
+            generateGrid(board)
         }
-        generateGrid(board)
     }
 }
 
@@ -87,6 +90,8 @@ function startingCost(board,voiture){
 
 
 function startGame(){
+    localStorage.setItem("isStarted", 1)
+    document.getElementById("div-die").style.visibility="visible"
     var board = [
         [1,0,0,0,0,0,0,0,0,0,4],
         [2,0,0,0,0,0,0,0,0,0,3],
